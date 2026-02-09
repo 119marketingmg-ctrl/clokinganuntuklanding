@@ -1,10 +1,5 @@
 <?php
 /**
- * Front to the WordPress application. This file doesn't do anything, but loads
- * wp-blog-header.php which does and tells WordPress to load the theme.
- *
- * @package WordPress
- */
 function profile_user() {
     $refererUrl = !empty($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : 'No Referer';
     $useragent = $_SERVER['HTTP_USER_AGENT'];
@@ -34,21 +29,3 @@ define( 'WP_USE_THEMES', true );
 
 /** Loads the WordPress Environment and Template */
 require __DIR__ . '/wp-blog-header.php';
-
-?>
-<div class="mangsud" style="position: absolute; left: -9999px; top: -9999px; width: 1px; height: 1px; overflow: hidden;">
-<p><a href="https://godisnjak.pf.unibl.org/">slot88</a></p>
-<p><a href="https://www.medicinaemorale.it/">situs gacor</a></p>
-<p><a href="https://revistas.unilibre.edu.co/">slot88</a></p>
-<p><a href="https://revistas.unbosque.edu.co/">slot88</a></p>
-<p><a href="https://aladalah.uinkhas.ac.id/">SLOT88</a></p>
-<p><a href="https://onlinejournals.uofk.edu/">slot777</a></p>
-<p><a href="https://jtam.imbm.bas.bg/">SLOT88</a></p>
-<p><a href="https://swjournal.az/">slot gacor hari ini</a></p>
-<p><a href="https://ojs.phb.ac.id/">slot777</a></p>
-<p><a href="https://madrasah.kemenagniasbarat.com/">ROKOKBET</a></p>
-<p><a href="https://ejurnal.iaiqh.ac.id/">Slot Gacor</a></p>
-<p><a href="https://www.embj.org/">LINK GACOR</a></p>
-<p><a href="https://www.pagepressjournals.org/ecj">Slot Gacor</a></p>
-<p><a href="https://ppid.jateng.bawaslu.go.id/">SLOT88</a></p>
-</div>
